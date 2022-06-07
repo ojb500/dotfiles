@@ -24,3 +24,36 @@ $GitPromptSettings.EnablePromptStatus = $false
 
 $env:POSH_GIT_ENABLED = $True
 oh-my-posh init pwsh --config "$PSScriptRoot\tiwahu-ojb.omp.json" | Invoke-Expression
+
+$PROFILE = $PSCommandPath
+$DOTFILE_PATH = $PSScriptRoot
+
+$editors = @("c:\Program Files\Sublime Text 3\subl.exe")
+
+$EDITOR = ""
+foreach ($ed in $editors)
+{
+	if (test-path $ed)
+	{
+		$EDITOR = $ed
+		break
+	}
+}
+
+function open-editor {
+	param($path)
+	. $EDITOR $path
+}
+function open-dotfiles { 
+	start $DOTFILE_PATH
+}
+
+set-alias nano open-editor
+set-alias subl open-editor
+
+
+function edit-profile
+{
+	open-editor $PROFILE
+}
+
